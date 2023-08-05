@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
 from pathlib import Path
 import json
 
@@ -28,6 +28,14 @@ def index():
     email = get_email()
     
     return f"Name: {name}\nAge: {age}\nEmail: {email}"
+
+@app.route("/form", methods=["GET", "POST"])
+def myform():
+    if request.method == "POST":
+        print(dict(request.form))
+        return redirect(url_for("index"))
+    else:
+        return render_template("form.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
