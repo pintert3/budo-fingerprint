@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Order Page</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html"><img src="home-icon.png" alt="Home"></a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Select Items to Order</h1>
+        <div class="categories">
+            <div class="category">
+                <h2>Foods</h2>
+                <label><input type="checkbox" value="Pizza" data-price="15000"> Pizza</label>
+                <label><input type="checkbox" value="Burger" data-price="20000"> Burger</label>
+                <!-- Add more food items here -->
+            </div>
+            <div class="category">
+                <h2>Drinks</h2>
+                <label><input type="checkbox" value="Soda" data-price="1000"> Soda</label>
+                <label><input type="checkbox" value="Coffee" data-price="5000"> Coffee</label>
+                <!-- Add more drink items here -->
+            </div>
+            <div class="category">
+                <h2>Snacks</h2>
+                <label><input type="checkbox" value="Chips" data-price="7000"> Chips</label>
+                <label><input type="checkbox" value="Cookies" data-price="6000"> Cookies</label>
+                <!-- Add more snack items here -->
+            </div>
+            <div class="category">
+                <h2>Accessories</h2>
+                <label><input type="checkbox" value="T-shirt" data-price="12000"> T-shirt</label>
+                <label><input type="checkbox" value="Mug" data-price="7500"> Mug</label>
+                <!-- Add more accessory items here -->
+            </div>
+        </div>
+        <button class="submit-button" id="proceed-to-checkout" type="button">Proceed to Checkout</button>
+    </div>
+    <footer>
+        &copy; 2023 Your Company. All rights reserved.
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
