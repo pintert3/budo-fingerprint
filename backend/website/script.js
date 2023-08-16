@@ -1,88 +1,50 @@
-// Common function to update localStorage with selected items
-function updateLocalStorage(selectedItems) {
-    localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+const orderForm = document.getElementById('order-form');
+const addItemButton = document.getElementById('add-item');
+const addToCartButton = document.getElementById('add-to-cart');
+const cart = document.getElementById('cart');
+
+addItemButton.addEventListener('click', addNewItem);
+addToCartButton.addEventListener('click', addToCart);
+
+function addNewItem() {
+    const newItem = document.createElement('div');
+    newItem.innerHTML = `
+        <label for="food-item">Select Food Item:</label>
+        <select class="food-item" name="food-item">
+            <option value="burger">Burger</option>
+            <option value="pizza">Pizza</option>
+            <!-- Add more food items here -->
+        </select>
+        <label for="quantity">Quantity:</label>
+        <input class="quantity" type="number" name="quantity" value="1" min="1">
+    `;
+    orderForm.insertBefore(newItem, addItemButton);
 }
 
-// Calculate total price based on selected items
-function calculateTotal(selectedItems) {
+function addToCart() {
+    const cartItems = orderForm.querySelectorAll('.food-item');
+    const quantities = orderForm.querySelectorAll('.quantity');
+    cart.innerHTML = '<h2>Cart</h2>';
     let total = 0;
-    selectedItems.forEach(item => {
-        total += item.price * item.quantity;
-    });
-    return total;
-}
 
-// Update total price display on the checkout page
-function updateTotalDisplay(selectedItems) {
-    const total = calculateTotal(selectedItems);
-    const totalDiv = document.getElementById('total-price');
-    if (totalDiv) {
-        totalDiv.textContent = `Total: UGX ${total.toLocaleString()}`;
+    for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i].value;
+        const quantity = parseInt(quantities[i].value);
+        const price = calculatePrice(item, quantity);
+        total += price;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `${quantity}x ${item} - UGX ${price.toLocaleString()}`;
+        cart.appendChild(itemDiv);
     }
+    const totalPriceSpan = document.getElementById('total-price');
+    totalPriceSpan.textContent = 'UGX ${total.toLocaleString()}';
 }
 
-// Update selected items and total when quantity changes
-function updateSelectedItemsAndTotal(selectedItems, name, newQuantity) {
-    selectedItems.forEach(item => {
-        if (item.name === name) {
-            item.quantity = newQuantity;
-        }
-    });
+function calculatePrice(item, quantity) {
+    const selectedOption = document.querySelector('.food-item option[value="${item}"]');
+    const price = parseInt(selectedOption.getAttribute('data-price'));
 
-    updateLocalStorage(selectedItems);
-    updateTotalDisplay(selectedItems);
+    //Calculate total price
+    return quantity * price;
 }
-
-// Display selected items and quantities along with prices (checkout page)
-function displaySelectedItems() {
-    const selectedItemsDiv = document.getElementById('selected-items');
-    const selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-
-    if (selectedItems && selectedItems.length > 0) {
-        selectedItemsDiv.innerHTML = ''; // Clear existing items
-
-        selectedItems.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'order-item';
-            itemDiv.innerHTML = `
-                <h2>${item.name}</h2>
-                <p>Price: UGX ${item.price.toLocaleString()}</p>
-                <label>Quantity: <input type="number" class="quantity-input" data-name="${item.name}" value="${item.quantity}" min="1"></label>
-            `;
-            selectedItemsDiv.appendChild(itemDiv);
-
-            // Add event listener to quantity input for each item
-            const quantityInput = itemDiv.querySelector('.quantity-input');
-            if (quantityInput) {
-                quantityInput.addEventListener('change', () => {
-                    const newQuantity = parseInt(quantityInput.value);
-                    updateSelectedItemsAndTotal(selectedItems, item.name, newQuantity);
-                });
-            }
-        });
-
-        // Calculate and display total price
-        updateTotalDisplay(selectedItems);
-    }
-}
-
-// Handle "Proceed to Checkout" button click
-function handleProceedToCheckout() {
-    const selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-
-    if (selectedItems && selectedItems.length > 0) {
-        window.location.href = 'checkout.html';
-    } else {
-        alert('Please select items before proceeding to checkout.');
-    }
-}
-
-// Add event listener to "Proceed to Checkout" button on order page
-const proceedToCheckoutButton = document.getElementById('proceed-to-checkout');
-
-if (proceedToCheckoutButton) {
-    proceedToCheckoutButton.addEventListener('click', handleProceedToCheckout);
-}
-
-// Call the function to display selected items on the checkout page
-displaySelectedItems();

@@ -138,10 +138,11 @@ body {
     width: 300px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
+
 }
 
 .login-container h1 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 /* Styling for login form */
@@ -149,6 +150,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:30%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 label {
