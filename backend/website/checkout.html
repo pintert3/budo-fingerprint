@@ -23,6 +23,16 @@
             <!-- Selected items will be displayed here -->
         </ul>
         <p class="final-price">Total Price: <span id="total-price">UGX 0.00</span></p>
+        <div id="confirm-form">
+            <form id="confirm-order-form">
+                <input type="text" id="user-id" placeholder="Enter User ID" required ><br>
+                <button type="submit">Confirm</button>
+              </form>
+              <p>Your Order ID: <span id="order-id"></span></p>
+              
+              
+        </div>
+    
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -30,51 +40,86 @@
         function displaySelectedItems() {
             const selectedItemsList = document.getElementById("selected-items-list");
             const totalPriceSpan = document.getElementById("total-price");
-
+    
             const urlParams = new URLSearchParams(window.location.search);
             const selectedItems = [];
-
+    
             urlParams.forEach((value, key) => {
                 if (key.startsWith("item")) {
                     const quantity = urlParams.get(key.replace("item", "quantity"));
                     selectedItems.push({ item: value, quantity: quantity });
                 }
             });
-
+    
             if (selectedItems.length > 0) {
                 let total = 0;
-
+    
                 selectedItems.forEach(item => {
                     const price = calculatePrice(item.item, item.quantity);
                     total += price;
-
+    
                     const listItem = document.createElement("li");
                     listItem.textContent = `${item.quantity}x ${item.item} - UGX ${price.toFixed(2)}`;
                     selectedItemsList.appendChild(listItem);
                 });
-
+    
                 totalPriceSpan.textContent = `UGX ${total.toFixed(2)}`;
             }
         }
-
+    
         function calculatePrice(item, quantity) {
-    const itemPrices = {
-        Samosa: 500,
-        Chapati: 500,
-        Soda:1000,
-        // Add more items and their prices here
-    };
-
-    const pricePerItem = itemPrices[item]; // Get price from itemPrices object
-    if (pricePerItem !== undefined) {
-        // Calculate total price
-        return quantity * pricePerItem;
-    }
-    return 0; // Default to 0 if price is not defined
-}
-
+            const itemPrices = {
+                Samosa: 500,
+                Chapati: 500,
+                Soda: 1000,
+                // Add more items and their prices here
+            };
+    
+            const pricePerItem = itemPrices[item]; // Get price from itemPrices object
+            if (pricePerItem !== undefined) {
+                // Calculate total price
+                return quantity * pricePerItem;
+            }
+            return 0; // Default to 0 if price is not defined
+        }
+    
         // Call the function when the page loads
         displaySelectedItems();
+    
+        // Handle form submission
+        document.getElementById("confirm-order-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userId = document.getElementById("user-id").value;
+    
+            // Fetch user data from JSON file
+            fetch("db.json")
+                .then(response => response.json())
+                .then(userData => {
+                    const user = userData.users[userId];
+                    if (user) {
+                        // Generate and display the order ID
+                        const orderID = generateOrderID();
+                        document.getElementById("order-id").textContent = orderID;
+    
+                        // Show a message to confirm the order
+                        alert(`Order confirmed for ${user.name}!\nYour Order ID: ${orderID}`);
+    
+                        // Redirect to payment page
+                        window.location.href = "payment.html";
+                    } else {
+                        alert("Invalid user ID.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                });
+        });
+    
+        // Generate a random order ID
+        function generateOrderID() {
+            return "ORDER-" + Math.floor(Math.random() * 10000);
+        }
     </script>
+    
 </body>
 </html>
