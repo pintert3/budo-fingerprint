@@ -15,6 +15,8 @@ form {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f7f7f7;
+  margin-top: 3%;
+  margin-bottom: 10%;
 }
 
 /* Styling for labels */
@@ -70,11 +72,13 @@ button:hover{
     <nav class="navbar">
         <ul>
             <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
             <li><a href="order.html">Order</a></li>
             <li><a href="checkout.html">Checkout</a></li>
-            <li><a href="login.html">Login</a></li>
         </ul>
     </nav>
+    
+    <h1 style="text-align: center; margin-top: 2%;">Enter Order Here</h1>
 
   <form id="dynamic-form">
     <div id="item-container">
@@ -95,6 +99,32 @@ button:hover{
     <button type="button" id="add-item-button">Add Item</button> <br>
     <button type="button" id="checkout-button">Proceed to Checkout</button> <!-- Changed button text -->
   </form>
+  <footer class="footer">
+    <div class="footer-content">
+    <div class="footer-links">
+        <p style="font-weight: bold;">Links</p>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+    </div>
+    <div class="footer-contacts">
+        <p style="font-weight: bold;">Contact Us:</p>
+        <ul>
+            <li>Tel: <a href="tel">+25612345678</a></li>
+            <li>Email: <a href="email">123@gmail.com</a> </li>
+        </ul>
+    </div>
+    <div class="footer-location">
+      <p style="font-weight: bold;">Location</p>
+    </div>
+    </div>
+    <p>&copy; 2023 EazyAccess. All rights reserved.</p>
+</footer>
+
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
         const fieldsContainer = document.getElementById("item-container");
