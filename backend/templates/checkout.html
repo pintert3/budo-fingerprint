@@ -27,6 +27,8 @@
     <script src="{{url_for('static', filename='script.js')}}"></script>
     <script>
         // Function to extract and display selected items from the URL parameters
+        var orderTotal = 0
+
         function displaySelectedItems() {
             const selectedItemsList = document.getElementById("selected-items-list");
             const totalPriceSpan = document.getElementById("total-price");
@@ -40,7 +42,7 @@
                     selectedItems.push({ item: value, quantity: quantity });
                 }
             });
-    
+            
             if (selectedItems.length > 0) {
                 let total = 0;
     
@@ -54,6 +56,7 @@
                 });
     
                 totalPriceSpan.textContent = `UGX ${total.toFixed(2)}`;
+                orderTotal = total;
             }
         }
     
@@ -94,8 +97,8 @@
                         // Show a message to confirm the order
                         alert(`Order confirmed for ${user.name}!\nYour Order ID: ${orderID}`);
     
-                        // Redirect to payment page
-                        window.location.href = "payment";
+                        // Redirect to id verification page
+                        window.location.href = "verification/" + orderTotal + "/" + userId;
                     } else {
                         alert("Invalid user ID.");
                     }

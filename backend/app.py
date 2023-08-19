@@ -10,6 +10,11 @@ def get_db():
     f = json.loads(data)
     return f
 
+def write_db(new_data):
+    data = json.dumps(new_data)
+    Path("db.json").write_text(data)
+    return True
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -34,6 +39,11 @@ def login():
 def db():
     return get_db()
 
+@app.route("/verification/<int:total>/<user_id>")
+def verification(total, user_id):
+    data = get_db()
+    data["current_user_id"] = user_id
+    return render_template("verification.html", order_total=total)
 
 @app.route("/form", methods=["GET", "POST"])
 def myform():
@@ -43,14 +53,30 @@ def myform():
     else:
         return render_template("form.html")
 
-@app.route("/arduino")
-def arduino():
+@app.route("/arduino/<int:order_total>")
+def arduino(order_total):
+    data = get_db()
+    current_student = data["current_student_id"]
     print("hello")
-    res = requests.get("http://10.32.36.40")
-    print(res)
-    data = res.json()
     print(data)
-    return "Hello, World!"
+    # ask arduino for id
+    res = requests.get("http://192.168.16.156")
+    print(res)
+    finger_id = res.json()["id"]
+    result = False
+    error = ""
+    if (finger_id in data["users"]) :
+        #check balance
+        balance = data["users"][finger_id]["balance"]
+        print(balance)
+        if (balance >= order_total):
+            new_balance = balance - order_total
+            result = True
+        else:
+            error = "Balance too low"
+    else:
+        error = "Invalid user ID"
+    return {"valid" : result, "error": error}
 
 if __name__ == "__main__":
     app.run(debug=True)

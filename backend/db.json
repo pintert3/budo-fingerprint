@@ -2,23 +2,30 @@
  {
    "users": {
      "1": {
-       "name": "Calvin Rwakibale"
+       "name": "Calvin Rwakibale",
+       "balance": 20000
      },
      "2": {
-       "name": "Kaitesi Angel"
+       "name": "Kaitesi Angel",
+       "balance": 200000
      },
      "3": {
-       "name": "Ashaba Raymond"
+       "name": "Ashaba Raymond",
+       "balance": 49000
      },
      "4": {
-       "name": "Mulindwa Jamal-Deen"
+       "name": "Mulindwa Jamal-Deen",
+       "balance": 3000
      },
      "5": {
-       "name": "Geno Jonathan"
+       "name": "Geno Jonathan",
+       "balance": 100000
      },
      "6": {
-      "name": "Kuulo Shalom Cyrus"
+      "name": "Kuulo Shalom Cyrus",
+      "balance": 100000
     }
-   }
+   },
+   "current_student_id" : null
  }
  
