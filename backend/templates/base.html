@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% block styles %}
+    {% endblock styles %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+{% block navbar %}
+<nav class="navbar">
+    <ul>
+        <li><a href="{{ url_for('index')}}">Home</a></li>
+        <li><a href="{{ url_for('login')}}">Login</a></li>
+        <li><a href="{{ url_for('order')}}">Order</a></li>
+        <li><a href="{{ url_for('checkout')}}">Checkout</a></li>
+    </ul>
+</nav>
+{% endblock navbar %}
+
+{% block content %}{% endblock content %}
+{% block footer %}
+<footer class="footer">
+    <div class="footer-content">
+    <div class="footer-links">
+        <p style="font-weight: bold;">Links</p>
+        <ul>
+          <li><a href="{{ url_for('index')}}">Home</a></li>
+          <li><a href="{{ url_for('login')}}">Login</a></li>
+          <li><a href="{{ url_for('order')}}">Order</a></li>
+          <li><a href="{{ url_for('checkout')}}">Checkout</a></li>
+
+        </ul>
+    </div>
+    <div class="footer-contacts">
+        <p style="font-weight: bold;">Contact Us:</p>
+        <ul>
+            <li>Tel: <a href="tel">+25612345678</a></li>
+            <li>Email: <a href="email">123@gmail.com</a> </li>
+        </ul>
+    </div>
+    <div class="footer-location">
+      <p style="font-weight: bold;">Location</p>
+    </div>
+    </div>
+    <p>&copy; 2023 EazyAccess. All rights reserved.</p>
+</footer>
+{% endblock footer %}
+
+{% block scripts %}
+{% endblock scripts %}
+</body>
+
+</html>         

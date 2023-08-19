@@ -73,7 +73,7 @@ void loop() {
   if (kggSearchFinger() == -1) {
     Serial.print("Fingerprint found: ID #");
     Serial.println(finger.fingerID);
-    // 1. Get temperature
+
 
 
     Serial.println("Entry Registered...");

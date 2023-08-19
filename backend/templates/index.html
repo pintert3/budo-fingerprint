@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Home Page{% endblock title %}
+
+{% block content %}
+<div class="content">
+    <h1>What is SwiftTouch Solutions?</h1>
+
+    <p>This is a biometric system with the integral goal of <br> tackling the SDGs of Zero poverty etc
+        through the <br> mobile hassle-free transactions!
+    </p>
+
+    <h2>ICT SOLUTIONS FOR KEY DEVELOPMENT</h2>
+
+    <p>Basic implementation of the system into the <br>school and administration managament 
+        will effectively create a holistic environemnt <br>for the school, country and Africa at large.
+    </p>
+
+</div>
+<div class="button-links">
+    <button><a href="{{ url_for('order')}}">Start Order</a> </button>
+</div>
+{% endblock content %}
