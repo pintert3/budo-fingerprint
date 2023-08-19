@@ -82,7 +82,7 @@
             const userId = document.getElementById("user-id").value;
     
             // Fetch user data from JSON file
-            fetch("db.json")
+            fetch("/db")
                 .then(response => response.json())
                 .then(userData => {
                     const user = userData.users[userId];
