@@ -3,6 +3,8 @@ import requests
 from pathlib import Path
 import json
 
+ARDUINO_URL = "http://192.168.16.156"
+
 app = Flask(__name__)
 
 def get_db():
@@ -60,7 +62,7 @@ def arduino(order_total):
     print("hello")
     print(data)
     # ask arduino for id
-    res = requests.get("http://192.168.16.156")
+    res = requests.get(ARDUINO_URL)
     print(res)
     finger_id = res.json()["id"]
     result = False
