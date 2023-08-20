@@ -76,6 +76,9 @@ nav ul li a:hover{
     height: 10%;
 }
 .button-links button a{
+    display: block;
+    height: 100%;
+    width : 100%;
     text-decoration: none;
     color: white;
     font-weight: bolder;
