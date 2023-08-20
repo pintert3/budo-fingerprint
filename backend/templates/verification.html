@@ -12,18 +12,18 @@
 
 {% block scripts %}
 <script>
-fetch("/arduino/{{ order_total }}")
+fetch("/arduino/{{ order_data['order_total'] }}")
     .then(response => response.json())
     .then(idData => {
-        if (idData[valid]) {
+        if (idData["valid"]) {
             // Generate and display the order ID
-            const orderID = generateOrderID();
+            const orderID = "{{ order_data['order_id'] }}"
             document.getElementById("order-id").textContent = orderID;
 
             // Redirect to order completion page
             window.location.href = "/complete_transaction";
         } else {
-            alert(idData[error]);
+            alert(idData["error"]);
             window.location.href = "/order";
         }
     })

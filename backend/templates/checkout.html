@@ -97,7 +97,7 @@
                         alert(`Order confirmed for ${user.name}!\nYour Order ID: ${orderID}`);
     
                         // Redirect to id verification page
-                        window.location.href = "verification/" + orderTotal + "/" + userId;
+                        window.location.href = "verification/" + orderTotal + "/" + userId + "/" + orderID;
                     } else {
                         alert("Invalid user ID.");
                     }

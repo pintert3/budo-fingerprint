@@ -2,19 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for
 import requests
 from pathlib import Path
 import json
+import random
 
-ARDUINO_URL = "http://192.168.16.156"
+# ARDUINO_URL = "http://192.168.16.156"
+ARDUINO_URL = "http://192.168.1.7:5000"
+db_file = (Path(__file__).parent/"db.json")
 
 app = Flask(__name__)
 
 def get_db():
-    data = Path("db.json").read_text()
+    data = db_file.read_text()
     f = json.loads(data)
     return f
 
 def write_db(new_data):
     data = json.dumps(new_data)
-    Path("db.json").write_text(data)
+    db_file.write_text(data)
     return True
 
 @app.route("/")
@@ -41,19 +44,29 @@ def login():
 def db():
     return get_db()
 
-@app.route("/verification/<int:total>/<user_id>")
-def verification(total, user_id):
+@app.route("/verification/<int:total>/<user_id>/<order_id>")
+def verification(total, user_id, order_id):
     data = get_db()
-    data["current_user_id"] = user_id
-    return render_template("verification.html", order_total=total)
+    data["current_student_id"] = user_id
+    # new_order_id = str(int(data["last_order_id"]) + 1).zfill(4)
+    # print(data)
+    user_name = data["users"][user_id]["name"]
+    order_data = { "name" : user_name, "order_id" : order_id, "order_total": total}
 
-@app.route("/form", methods=["GET", "POST"])
-def myform():
-    if request.method == "POST":
-        print(dict(request.form))
-        return redirect(url_for("index"))
-    else:
-        return render_template("form.html")
+    # NOTE: You could save the order ID and it's details in the database
+    data["last_order_id"] = order_id
+    data["last_order_total"] = total
+    write_db(data)
+    return render_template("verification.html", order_data=order_data)
+
+@app.route("/complete_transaction")
+def complete_transaction():
+    data = get_db()
+    order_details = {"order_id": data["last_order_id"],
+                     "order_total" : data["last_order_total"],
+                     "student" : data["users"][data["current_student_id"]]["name"]
+                     } 
+    return render_template("complete_transaction.html", order_details=order_details)
 
 @app.route("/arduino/<int:order_total>")
 def arduino(order_total):
