@@ -12,7 +12,7 @@ def index():
         return {"id" : "3"}
     else:
         sleep(9)
-        return {"id" : "4"}
+        return {"id" : "10"}
 
 
 if __name__ == "__main__":
