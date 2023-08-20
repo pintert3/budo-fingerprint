@@ -20,11 +20,8 @@ fetch("/arduino/{{ order_total }}")
             const orderID = generateOrderID();
             document.getElementById("order-id").textContent = orderID;
 
-            // Show a message to confirm the order
-            alert(`Order confirmed for ${user.name}!\nYour Order ID: ${orderID}`);
-
-            // Redirect to id verification page
-            window.location.href = "payment";
+            // Redirect to order completion page
+            window.location.href = "/complete_transaction";
         } else {
             alert(idData[error]);
             window.location.href = "/order";

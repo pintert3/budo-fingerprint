@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Complete Transaction{% endblock title}
+{% block title %}Complete Transaction{% endblock title %}
 {% block content %}
 <div class="payment-content" >
     <h1>Transaction complete!</h1>
+    <p>Name: <strong>{{order_details['student']}}</strong></p>
+    <p>Order ID: {{order_details['order_id']}}</p>
+    <p>Transaction total: <strong>{{order_details['order_total']}}</strong> UGX</p>
 </div>
+<div><p id="home-redirect">You will be redirected to the home page in 5 seconds.</p></div>
 {% endblock content %}
-{% block footer %}
-{% endblock footer %}
+{% block scripts %}
+<script>
+    setTimeout(() => {
+        window.location.href = "/";
+    }, 5000);
+</script>
+{% endblock scripts %}
